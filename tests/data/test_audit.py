@@ -1,4 +1,4 @@
-﻿import tempfile
+import tempfile
 import unittest
 from pathlib import Path
 
@@ -6,6 +6,7 @@ from sonar_mine_detection.data.audit import get_category, read_labels
 
 
 class TestAudit(unittest.TestCase):
+
     def test_get_category(self):
         self.assertEqual(get_category([]), "empty")
         self.assertEqual(get_category([0]), "milco_only")
