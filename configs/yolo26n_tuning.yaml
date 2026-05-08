@@ -1,0 +1,22 @@
+﻿model: yolo26n.pt
+data: configs/data_yolo.yaml
+imgsz: 640
+seed: 42
+
+search_space:
+  lr0:
+    - 0.001
+    - 0.005
+    - 0.01
+  batch:
+    - 8
+    - 16
+  patience:
+    - 50
+    - 100
+  optimizer:
+    - SGD
+
+validation_thresholds:
+  - 0.25
+  - 0.50

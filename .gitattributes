@@ -1,0 +1,4 @@
+models/final/*.pt filter=lfs diff=lfs merge=lfs -text
+models/final/*.onnx filter=lfs diff=lfs merge=lfs -text
+models/final/*.weights filter=lfs diff=lfs merge=lfs -text
+models/final/*.engine filter=lfs diff=lfs merge=lfs -text

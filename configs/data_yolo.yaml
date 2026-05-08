@@ -1,0 +1,8 @@
+﻿path: data/processed/yolo
+train: images/train
+val: images/val
+test: images/test
+
+names:
+  0: MILCO
+  1: NOMBO

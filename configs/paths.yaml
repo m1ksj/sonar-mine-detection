@@ -1,0 +1,31 @@
+﻿# Raw dataset location.
+# The downloaded dataset should be placed under data/raw/.
+# data/raw/2010/2010/*.jpg and *.txt
+# data/raw/2015/2015/*.jpg and *.txt
+# data/raw/2017/2017/*.jpg and *.txt
+# data/raw/2018/2018/*.jpg and *.txt
+# data/raw/2021/2021/*.jpg and *.txt
+
+raw_data_dir: data/raw
+
+raw_years:
+  - 2010
+  - 2015
+  - 2017
+  - 2018
+  - 2021
+
+# generated data locations
+processed_data_dir: data/processed
+processed_yolo_dir: data/processed/yolo
+processed_darknet_dir: data/processed/darknet
+
+metadata_dir: data/metadata
+splits_dir: data/splits
+
+# Reports and model locations
+figures_dir: reports/figures
+results_dir: reports/results_tables
+models_dir: models
+final_models_dir: models/final
+checkpoints_dir: models/checkpoints
