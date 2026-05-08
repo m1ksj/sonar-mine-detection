@@ -1,0 +1,21 @@
+﻿# Online augmentation during training only.
+# Validation and test data must not be augmented.
+
+imgsz: 640
+
+mosaic: 1.0
+mixup: 0.0
+copy_paste: 0.0
+
+degrees: 5.0
+translate: 0.10
+scale: 0.30
+shear: 0.0
+perspective: 0.0
+
+fliplr: 0.5
+flipud: 0.0
+
+hsv_h: 0.015
+hsv_s: 0.20
+hsv_v: 0.20
