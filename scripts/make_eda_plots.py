@@ -42,7 +42,8 @@ def plot_year_category_distribution(manifest):
     ax.set_xlabel("Year")
 
     fig.tight_layout()
-    fig.savefig(FIGURE_DIR / "per_year_image_category_distribution.png", dpi=200)
+    output_path = FIGURE_DIR / "per_year_image_category_distribution.png"
+    fig.savefig(output_path, dpi=200)
     plt.close(fig)
 
 
