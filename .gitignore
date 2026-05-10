@@ -1,4 +1,4 @@
-﻿# raw and generated data
+# raw and generated data
 data/raw/
 data/processed/
 
@@ -13,6 +13,11 @@ models/checkpoints/
 *.weights
 *.engine
 
+# Allow final selected model artifacts through Git LFS
+!models/final/*.pt
+!models/final/*.onnx
+!models/final/*.weights
+!models/final/*.engine
 !models/final/.gitkeep
 # local files
 .env
