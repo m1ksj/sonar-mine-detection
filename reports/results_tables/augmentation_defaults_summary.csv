@@ -1,0 +1,8 @@
+﻿augmentation_aspect,yolov4_darknet_default_cfg,yolo26n_default_finetune_args,project_interpretation
+mosaic,"mosaic=1","mosaic=1.0; close_mosaic=10","Both fine-tuning defaults use strong mosaic augmentation."
+geometric_position_scale,"jitter=.3; angle=0; random=1","degrees=0.0; translate=0.1; scale=0.5; shear=0.0; perspective=0.0; multi_scale=0.0","Both use geometric variation, but YOLOv4 uses Darknet jitter and random multi-scale, while YOLO26n uses explicit translate/scale parameters at fixed 640 input size."
+color_intensity,"saturation=1.5; exposure=1.5; hue=.1","hsv_h=0.015; hsv_s=0.7; hsv_v=0.4; bgr=0.0","Both use strong color/intensity augmentation; this is useful to test carefully because SSS is not natural RGB imagery."
+flipping,"not explicit in yolov4-custom.cfg audit","fliplr=0.5; flipud=0.0","YOLO26n default fine-tuning uses horizontal flip but no vertical flip; horizontal flip is plausible for SSS, vertical flip is more questionable."
+mixing_copy_paste,"cutmix not active/empty in cfg audit","mixup=0.0; cutmix=0.0; copy_paste=0.0; copy_paste_mode=flip","Default fine-tuning does not use MixUp, CutMix or Copy-Paste in either audited setup."
+auto_augment_erasing,"not explicit in yolov4-custom.cfg audit","auto_augment=randaugment; erasing=0.4","YOLO26n fine-tuning defaults include additional augmentation-style settings not present in the YOLOv4 cfg audit."
+input_size_variation,"random=1; width=608; height=608 in default cfg","imgsz=640; multi_scale=0.0","YOLOv4 default cfg uses random multi-scale training, while YOLO26n default fine-tuning keeps fixed image size."

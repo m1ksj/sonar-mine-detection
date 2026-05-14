@@ -1,0 +1,31 @@
+﻿model: yolo26n.pt
+data: configs/data_yolo.yaml
+augmentation_config: configs/augmentation_yolo26n.yaml
+
+augmentation_mode: mosaic_affine_color_mild
+
+imgsz: 640
+epochs: 500
+batch: 16
+seed: 42
+optimizer: SGD
+lr0: 0.01
+patience: 50
+
+mosaic: 1.0
+close_mosaic: 10
+mixup: 0.0
+copy_paste: 0.0
+
+degrees: 0.0
+translate: 0.05
+scale: 0.20
+shear: 0.0
+perspective: 0.0
+
+fliplr: 0.5
+flipud: 0.0
+
+hsv_h: 0.0
+hsv_s: 0.10
+hsv_v: 0.15
