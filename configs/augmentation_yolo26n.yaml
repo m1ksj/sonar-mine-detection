@@ -2,79 +2,23 @@
 # Validation and test data must never be augmented.
 #
 # Motivation:
-# Recent side-scan sonar YOLO work reports YOLO-style training augmentation,
-# especially mosaic augmentation, random affine transformations and color jittering.
-# Exact augmentation strengths are often not reported, so we tune the augmentation
-# policy as a main regularization hyperparameter by cross-validation.
+# We audited the default augmentation settings of YOLOv4/Darknet and
+# YOLO26n/Ultralytics. Recent SSS YOLO work reports mosaic augmentation,
+# random affine transformations and color jittering, but does not provide exact
+# numeric strengths. Therefore, we tune YOLO26n augmentation strength with CV.
 
 imgsz: 640
 
 modes:
-  no_aug:
-    mosaic: 0.0
-    close_mosaic: 0
+  sss_paper_aug:
+    mosaic: 1.0
+    close_mosaic: 10
     mixup: 0.0
-    copy_paste: 0.0
-
-    degrees: 0.0
-    translate: 0.0
-    scale: 0.0
-    shear: 0.0
-    perspective: 0.0
-
-    fliplr: 0.0
-    flipud: 0.0
-
-    hsv_h: 0.0
-    hsv_s: 0.0
-    hsv_v: 0.0
-
-  affine_color_mild:
-    mosaic: 0.0
-    close_mosaic: 0
-    mixup: 0.0
+    cutmix: 0.0
     copy_paste: 0.0
 
     degrees: 0.0
     translate: 0.05
-    scale: 0.20
-    shear: 0.0
-    perspective: 0.0
-
-    fliplr: 0.5
-    flipud: 0.0
-
-    hsv_h: 0.0
-    hsv_s: 0.10
-    hsv_v: 0.15
-
-  mosaic_affine_color_mild:
-    mosaic: 1.0
-    close_mosaic: 10
-    mixup: 0.0
-    copy_paste: 0.0
-
-    degrees: 0.0
-    translate: 0.05
-    scale: 0.20
-    shear: 0.0
-    perspective: 0.0
-
-    fliplr: 0.5
-    flipud: 0.0
-
-    hsv_h: 0.0
-    hsv_s: 0.10
-    hsv_v: 0.15
-
-  mosaic_affine_color_stronger:
-    mosaic: 1.0
-    close_mosaic: 10
-    mixup: 0.0
-    copy_paste: 0.0
-
-    degrees: 5.0
-    translate: 0.10
     scale: 0.30
     shear: 0.0
     perspective: 0.0
@@ -82,6 +26,55 @@ modes:
     fliplr: 0.5
     flipud: 0.0
 
-    hsv_h: 0.015
+    hsv_h: 0.0
     hsv_s: 0.20
     hsv_v: 0.20
+
+    bgr: 0.0
+    erasing: 0.0
+
+  yolo26n_default:
+    mosaic: 1.0
+    close_mosaic: 10
+    mixup: 0.0
+    cutmix: 0.0
+    copy_paste: 0.0
+
+    degrees: 0.0
+    translate: 0.10
+    scale: 0.50
+    shear: 0.0
+    perspective: 0.0
+
+    fliplr: 0.5
+    flipud: 0.0
+
+    hsv_h: 0.015
+    hsv_s: 0.70
+    hsv_v: 0.40
+
+    bgr: 0.0
+    erasing: 0.4
+
+  yolo26n_default_stronger_sss:
+    mosaic: 1.0
+    close_mosaic: 10
+    mixup: 0.0
+    cutmix: 0.0
+    copy_paste: 0.0
+
+    degrees: 2.0
+    translate: 0.12
+    scale: 0.65
+    shear: 1.0
+    perspective: 0.0
+
+    fliplr: 0.5
+    flipud: 0.0
+
+    hsv_h: 0.015
+    hsv_s: 0.80
+    hsv_v: 0.50
+
+    bgr: 0.0
+    erasing: 0.4
