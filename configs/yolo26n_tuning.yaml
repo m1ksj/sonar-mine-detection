@@ -1,22 +1,47 @@
 ﻿model: yolo26n.pt
 data: configs/data_yolo.yaml
+augmentation_config: configs/augmentation_yolo26n.yaml
+
 imgsz: 640
+epochs: 500
 seed: 42
 
+cv:
+  split_dir: data/splits
+  folds:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 4
+  selection_metric: map50_95
+
 search_space:
+  augmentation_mode:
+    - no_aug
+    - affine_color_mild
+    - mosaic_affine_color_mild
+    - mosaic_affine_color_stronger
+
   lr0:
-    - 0.001
     - 0.005
     - 0.01
+
   batch:
-    - 8
     - 16
+
   patience:
     - 50
-    - 100
+
   optimizer:
     - SGD
 
 validation_thresholds:
   - 0.25
   - 0.50
+
+notes:
+  - Augmentation is the main tuning dimension because SSS YOLO literature reports augmentation but often does not ablate exact strengths.
+  - Batch, optimizer, patience and image size are kept fixed to keep the grid computationally realistic.
+  - Validation and test data must remain unaugmented.
+  - Planned CV trainings are 4 augmentation modes times 2 learning rates times 5 folds equals 40 runs.
