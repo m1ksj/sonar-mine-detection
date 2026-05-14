@@ -1,21 +1,87 @@
-﻿# Online augmentation during training only.
-# Validation and test data must not be augmented.
+﻿# YOLO26n online augmentation modes for training only.
+# Validation and test data must never be augmented.
+#
+# Motivation:
+# Recent side-scan sonar YOLO work reports YOLO-style training augmentation,
+# especially mosaic augmentation, random affine transformations and color jittering.
+# Exact augmentation strengths are often not reported, so we tune the augmentation
+# policy as a main regularization hyperparameter by cross-validation.
 
 imgsz: 640
 
-mosaic: 1.0
-mixup: 0.0
-copy_paste: 0.0
+modes:
+  no_aug:
+    mosaic: 0.0
+    close_mosaic: 0
+    mixup: 0.0
+    copy_paste: 0.0
 
-degrees: 5.0
-translate: 0.10
-scale: 0.30
-shear: 0.0
-perspective: 0.0
+    degrees: 0.0
+    translate: 0.0
+    scale: 0.0
+    shear: 0.0
+    perspective: 0.0
 
-fliplr: 0.5
-flipud: 0.0
+    fliplr: 0.0
+    flipud: 0.0
 
-hsv_h: 0.015
-hsv_s: 0.20
-hsv_v: 0.20
+    hsv_h: 0.0
+    hsv_s: 0.0
+    hsv_v: 0.0
+
+  affine_color_mild:
+    mosaic: 0.0
+    close_mosaic: 0
+    mixup: 0.0
+    copy_paste: 0.0
+
+    degrees: 0.0
+    translate: 0.05
+    scale: 0.20
+    shear: 0.0
+    perspective: 0.0
+
+    fliplr: 0.5
+    flipud: 0.0
+
+    hsv_h: 0.0
+    hsv_s: 0.10
+    hsv_v: 0.15
+
+  mosaic_affine_color_mild:
+    mosaic: 1.0
+    close_mosaic: 10
+    mixup: 0.0
+    copy_paste: 0.0
+
+    degrees: 0.0
+    translate: 0.05
+    scale: 0.20
+    shear: 0.0
+    perspective: 0.0
+
+    fliplr: 0.5
+    flipud: 0.0
+
+    hsv_h: 0.0
+    hsv_s: 0.10
+    hsv_v: 0.15
+
+  mosaic_affine_color_stronger:
+    mosaic: 1.0
+    close_mosaic: 10
+    mixup: 0.0
+    copy_paste: 0.0
+
+    degrees: 5.0
+    translate: 0.10
+    scale: 0.30
+    shear: 0.0
+    perspective: 0.0
+
+    fliplr: 0.5
+    flipud: 0.0
+
+    hsv_h: 0.015
+    hsv_s: 0.20
+    hsv_v: 0.20
