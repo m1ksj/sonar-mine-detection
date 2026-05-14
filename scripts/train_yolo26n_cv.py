@@ -269,7 +269,8 @@ def train_yolo(
         seed=int(train_params["seed"]),
         workers=int(workers),
         device=device,
-        plots=True,
+        plots=bool(train_params.get("plots", True)),
+        cache=bool(train_params.get("cache", False)),
         save=True,
         verbose=True,
         **aug_params,
@@ -307,6 +308,7 @@ def main() -> None:
 
     config = load_yaml(args.config)
     aug_config = load_yaml(config["augmentation_config"])
+    runtime = config.get("runtime", {})
 
     split_dir = Path(config["cv"]["split_dir"])
     output_dir = Path(args.output_dir)
@@ -358,6 +360,8 @@ def main() -> None:
                 "imgsz": config["imgsz"],
                 "epochs": config["epochs"],
                 "seed": config["seed"],
+                "plots": runtime.get("plots_cv", False),
+                "cache": runtime.get("cache", True),
                 **params,
             }
 
@@ -384,15 +388,23 @@ def main() -> None:
         best = select_best_config(results)
         best_mode = best["augmentation_mode"]
 
+        final_config = config.get("final", {})
+        final_patience = final_config.get(
+                "patience",
+                int(best["patience"]),
+        )
+
         final_params = {
-            "imgsz": config["imgsz"],
-            "epochs": config["epochs"],
-            "seed": config["seed"],
-            "augmentation_mode": best_mode,
-            "lr0": float(best["lr0"]),
-            "batch": int(best["batch"]),
-            "patience": int(best["patience"]),
-            "optimizer": best["optimizer"],
+                "imgsz": config["imgsz"],
+                "epochs": int(final_config.get("epochs", config["epochs"])),
+                "seed": config["seed"],
+                "augmentation_mode": best_mode,
+                "lr0": float(best["lr0"]),
+                "batch": int(best["batch"]),
+                "patience": int(final_patience),
+                "optimizer": best["optimizer"],
+                "plots": runtime.get("plots_final", True),
+                "cache": runtime.get("cache", True),
         }
 
         final_yaml = prepare_final_dataset(split_dir, work_dir, file_index)
@@ -417,6 +429,40 @@ def main() -> None:
         )
 
         print(f"Final model saved in: {final_dir}")
+        final_weights = final_dir / "weights" / "best.pt"
+
+        if final_weights.exists():
+            from ultralytics import YOLO
+
+            model = YOLO(str(final_weights))
+            test_metrics = model.val(
+                data=str(final_yaml),
+                split="test",
+                project=str(output_dir / "ultralytics_runs"),
+                name="final_yolo26n_test_eval",
+                imgsz=int(final_params["imgsz"]),
+                batch=int(final_params["batch"]),
+                workers=int(args.workers),
+                device=args.device,
+                plots=True,
+            )
+
+            test_row = {
+                "precision": float(test_metrics.box.mp),
+                "recall": float(test_metrics.box.mr),
+                "map50": float(test_metrics.box.map50),
+                "map50_95": float(test_metrics.box.map),
+            }
+
+            table_dir = output_dir / "tables"
+            table_dir.mkdir(parents=True, exist_ok=True)
+            pd.DataFrame([test_row]).to_csv(
+                table_dir / "final_yolo26n_test_metrics.csv",
+                index=False,
+            )
+
+            print("Held-out test metrics:")
+            print(test_row)
 
     print("Done.")
 

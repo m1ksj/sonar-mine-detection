@@ -3,8 +3,8 @@ data: configs/data_yolo.yaml
 augmentation_config: configs/augmentation_yolo26n.yaml
 
 imgsz: 640
-epochs: 500
-seed: 15 # best group number
+epochs: 150
+seed: 15 #best group
 
 cv:
   split_dir: data/splits
@@ -15,6 +15,15 @@ cv:
     - 3
     - 4
   selection_metric: map50_95
+
+final:
+  epochs: 500
+  patience: 100
+
+runtime:
+  cache: true
+  plots_cv: false
+  plots_final: true
 
 search_space:
   augmentation_mode:
@@ -31,7 +40,7 @@ search_space:
     - 16
 
   patience:
-    - 100
+    - 40
 
   optimizer:
     - SGD
@@ -46,7 +55,9 @@ notes:
   - The YOLO26n default mode follows the actual default fine-tuning args observed in the audit run.
   - The stronger mode tests whether more aggressive SSS-relevant YOLO augmentation improves robustness.
   - Learning rate is tuned with 0.001, 0.005 and 0.01 to stay close to the proposal.
-  - Batch size is fixed at 16 and optimizer is fixed to SGD to keep the CV grid computationally realistic.
-  - Patience is fixed at 100, following the early-stopping style used in recent SSS YOLO work.
+  - CV uses 150 epochs and patience 40 to keep the 45-run search computationally realistic.
+  - The final selected model is trained separately for 500 epochs with patience 100.
+  - CV plots are disabled, final plots are enabled and cache is enabled for faster training.
+  - Batch size is fixed at 16 and optimizer is fixed to SGD.
   - Validation and test data must remain unaugmented.
   - Planned CV trainings are 3 augmentation modes times 3 learning rates times 5 folds equals 45 runs.
