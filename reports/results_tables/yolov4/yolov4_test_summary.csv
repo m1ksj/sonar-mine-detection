@@ -1,0 +1,2 @@
+model,split,map50,map50_percent,precision_conf_0p25,recall_conf_0p25,f1_conf_0p25,average_iou_percent,milco_ap_percent,nombo_ap_percent,tp,fp,fn,weights,config
+YOLOv4 Darknet default baseline,test,0.713504,71.35,0.71,0.71,0.71,55.69,65.46,77.25,72,29,29,final_model/yolov4-sonar-default_best.weights,final_model/yolov4-sonar-default.cfg

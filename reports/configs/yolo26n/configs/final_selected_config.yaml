@@ -1,0 +1,29 @@
+selected_config:
+  imgsz: 640
+  epochs: 500
+  seed: 15
+  augmentation_mode: sss_paper_aug
+  lr0: 0.005
+  batch: 16
+  patience: 100
+  optimizer: SGD
+  plots: true
+  cache: true
+augmentation:
+  mosaic: 1.0
+  close_mosaic: 10
+  mixup: 0.0
+  cutmix: 0.0
+  copy_paste: 0.0
+  degrees: 0.0
+  translate: 0.05
+  scale: 0.3
+  shear: 0.0
+  perspective: 0.0
+  fliplr: 0.5
+  flipud: 0.0
+  hsv_h: 0.0
+  hsv_s: 0.2
+  hsv_v: 0.2
+  bgr: 0.0
+  erasing: 0.0

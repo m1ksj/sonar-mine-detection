@@ -6,22 +6,26 @@ data/processed/
 runs/
 wandb/
 models/checkpoints/
+checkpoints/
+ultralytics_runs/
 
 # Large local/exported files
 *.pt
 *.onnx
 *.weights
 *.engine
+*.zip
 
-# Allow final selected model artifacts through Git LFS
-!models/final/*.pt
-!models/final/*.onnx
-!models/final/*.weights
-!models/final/*.engine
+# final model documentation only
+!models/final/README.md
 !models/final/.gitkeep
+
 # local files
 .env
 *.log
+
+# very large training logs
+reports/logs/yolov4/logs/yolov4_train_log.txt
 
 __pycache__/
 *.pyc
@@ -30,4 +34,3 @@ __pycache__/
 .vscode/
 .DS_Store
 Thumbs.db
-*.zip
