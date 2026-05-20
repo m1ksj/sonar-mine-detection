@@ -1,0 +1,56 @@
+model: yolo26n.pt
+data: configs/data_yolo.yaml
+augmentation_config: configs/augmentation_yolo26n.yaml
+imgsz: 640
+epochs: 150
+seed: 15
+cv:
+  split_dir: data/splits
+  folds:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  selection_metric: map50_95
+final:
+  epochs: 500
+  patience: 100
+runtime:
+  cache: true
+  plots_cv: false
+  plots_final: true
+search_space:
+  augmentation_mode:
+  - sss_paper_aug
+  - yolo26n_default
+  - yolo26n_default_stronger_sss
+  lr0:
+  - 0.001
+  - 0.005
+  - 0.01
+  batch:
+  - 16
+  patience:
+  - 40
+  optimizer:
+  - SGD
+validation_thresholds:
+- 0.25
+- 0.5
+notes:
+- The grid is based on audited YOLOv4 and YOLO26n default augmentation settings.
+- The SSS paper-inspired mode uses mosaic, random affine-style transforms and color
+  jittering.
+- The YOLO26n default mode follows the actual default fine-tuning args observed in
+  the audit run.
+- The stronger mode tests whether more aggressive SSS-relevant YOLO augmentation improves
+  robustness.
+- Learning rate is tuned with 0.001, 0.005 and 0.01 to stay close to the proposal.
+- CV uses 150 epochs and patience 40 to keep the 45-run search computationally realistic.
+- The final selected model is trained separately for 500 epochs with patience 100.
+- CV plots are disabled, final plots are enabled and cache is enabled for faster training.
+- Batch size is fixed at 16 and optimizer is fixed to SGD.
+- Validation and test data must remain unaugmented.
+- Planned CV trainings are 3 augmentation modes times 3 learning rates times 5 folds
+  equals 45 runs.

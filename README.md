@@ -95,3 +95,51 @@ The API will later be served with FastAPI and Uvicorn.
 - Work on personal branches, not directly on `main`
 - Prefer merging finished work into `dev`
 - Do not commit raw data, processed data, training runs or checkpoints
+
+## MVP deployment
+
+This repository contains a local FastAPI deployment for the final YOLO26n sonar mine detector.
+
+The API accepts one image and returns detected objects with class IDs, class names, confidence scores and bounding boxes.
+
+Classes:
+
+```text
+0 = MILCO
+1 = NOMBO
+```
+
+## Model weights
+
+The final YOLO26n weights are tracked with Git LFS.
+
+Expected path:
+
+```text
+models/final/yolo26n_best.pt
+```
+
+## Run API
+
+```bash
+uvicorn sonar_mine_detection.deployment.api:app --reload
+```
+
+or:
+
+```bash
+python scripts/run_api.py
+```
+
+Open:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+## MVP performance
+
+| Model | Split | mAP@0.50 | mAP@0.50:95 | Precision | Recall |
+|---|---:|---:|---:|---:|---:|
+| YOLO26n final | test | 0.6795 | 0.4951 | 0.8717 | 0.6570 |
+| YOLOv4 baseline | test | 0.7135 | - | 0.7100 | 0.7100 |

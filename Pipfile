@@ -12,9 +12,9 @@ pillow = "*"
 pyyaml = "*"
 tqdm = "*"
 opencv-python = "*"
-ultralytics = "*"
+ultralytics = "==8.4.50"
+uvicorn = {extras = ["standard"], version = "*"}
 fastapi = "*"
-uvicorn = "*"
 python-multipart = "*"
 
 [dev-packages]

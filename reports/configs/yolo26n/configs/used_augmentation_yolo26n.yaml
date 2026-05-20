@@ -1,0 +1,56 @@
+imgsz: 640
+modes:
+  sss_paper_aug:
+    mosaic: 1.0
+    close_mosaic: 10
+    mixup: 0.0
+    cutmix: 0.0
+    copy_paste: 0.0
+    degrees: 0.0
+    translate: 0.05
+    scale: 0.3
+    shear: 0.0
+    perspective: 0.0
+    fliplr: 0.5
+    flipud: 0.0
+    hsv_h: 0.0
+    hsv_s: 0.2
+    hsv_v: 0.2
+    bgr: 0.0
+    erasing: 0.0
+  yolo26n_default:
+    mosaic: 1.0
+    close_mosaic: 10
+    mixup: 0.0
+    cutmix: 0.0
+    copy_paste: 0.0
+    degrees: 0.0
+    translate: 0.1
+    scale: 0.5
+    shear: 0.0
+    perspective: 0.0
+    fliplr: 0.5
+    flipud: 0.0
+    hsv_h: 0.015
+    hsv_s: 0.7
+    hsv_v: 0.4
+    bgr: 0.0
+    erasing: 0.4
+  yolo26n_default_stronger_sss:
+    mosaic: 1.0
+    close_mosaic: 10
+    mixup: 0.0
+    cutmix: 0.0
+    copy_paste: 0.0
+    degrees: 2.0
+    translate: 0.12
+    scale: 0.65
+    shear: 1.0
+    perspective: 0.0
+    fliplr: 0.5
+    flipud: 0.0
+    hsv_h: 0.015
+    hsv_s: 0.8
+    hsv_v: 0.5
+    bgr: 0.0
+    erasing: 0.4
